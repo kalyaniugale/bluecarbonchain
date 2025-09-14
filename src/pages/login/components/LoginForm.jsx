@@ -36,54 +36,37 @@ const LoginForm = () => {
 
   const validateForm = () => {
     const newErrors = {};
-
-    if (!formData?.username?.trim()) {
-      newErrors.username = 'Username is required';
-    }
-
-    if (!formData?.password?.trim()) {
-      newErrors.password = 'Password is required';
-    }
-
-    if (!formData?.role) {
-      newErrors.role = 'Please select a role';
-    }
-
+    if (!formData?.username?.trim()) newErrors.username = 'Username is required';
+    if (!formData?.password?.trim()) newErrors.password = 'Password is required';
+    if (!formData?.role) newErrors.role = 'Please select a role';
     setErrors(newErrors);
     return Object.keys(newErrors)?.length === 0;
   };
 
   const handleSubmit = async (e) => {
     e?.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     setIsLoading(true);
-
     try {
-      // Simulate API call delay
+      // Simulated API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       const credentials = mockCredentials?.[formData?.username];
-      
+
       if (!credentials) {
         setErrors({ username: 'Invalid username. Please use: ngo_user, investor_user, or admin_user' });
         return;
       }
-
       if (credentials?.password !== formData?.password) {
         setErrors({ password: 'Invalid password. Check the credentials below the form.' });
         return;
       }
-
       if (credentials?.role !== formData?.role) {
         setErrors({ role: 'Role mismatch. Please select the correct role for this username.' });
         return;
       }
 
-      // Successful login
       const userData = {
         id: Date.now(),
         username: formData?.username,
@@ -92,7 +75,6 @@ const LoginForm = () => {
         role: credentials?.role,
         loginTime: new Date()?.toISOString()
       };
-
       login(userData);
     } catch (error) {
       setErrors({ general: 'Login failed. Please try again.' });
