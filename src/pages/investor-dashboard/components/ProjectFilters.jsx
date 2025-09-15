@@ -17,12 +17,12 @@ const ProjectFilters = ({ onFiltersChange, totalProjects, filteredCount }) => {
 
   const locationOptions = [
     'All Locations',
-    'Costa Rica',
-    'Philippines',
-    'Indonesia',
-    'Madagascar',
-    'Brazil',
-    'Thailand'
+    'West Bengal (Sundarbans), India',
+    'Tamil Nadu (Palk Bay), India',
+    'Tamil Nadu (Gulf of Mannar), India',
+    'Odisha (Chilika Lake), India',
+    'Gujarat (Gulf of Kachchh), India',
+    'Andaman & Nicobar Islands, India'
   ];
 
   const carbonTypeOptions = [
@@ -116,7 +116,9 @@ const ProjectFilters = ({ onFiltersChange, totalProjects, filteredCount }) => {
               key={location}
               variant={filters?.location === location ? "default" : "outline"}
               size="sm"
-              onClick={() => handleFilterChange('location', filters?.location === location ? '' : location)}
+              onClick={() =>
+                handleFilterChange('location', filters?.location === location ? '' : location)
+              }
             >
               {location}
             </Button>
@@ -172,7 +174,7 @@ const ProjectFilters = ({ onFiltersChange, totalProjects, filteredCount }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Min Investment (USD)</label>
+              <label className="block text-sm font-medium text-foreground mb-2">Min Investment (INR)</label>
               <Input
                 type="number"
                 placeholder="0"
@@ -183,7 +185,7 @@ const ProjectFilters = ({ onFiltersChange, totalProjects, filteredCount }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Max Investment (USD)</label>
+              <label className="block text-sm font-medium text-foreground mb-2">Max Investment (INR)</label>
               <Input
                 type="number"
                 placeholder="1000000"

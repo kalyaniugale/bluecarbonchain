@@ -63,7 +63,7 @@ const TokenStageCard = ({ stage, isActive, isCompleted, onClick }) => {
           </div>
           <div className="flex justify-between items-center">
             <span className="text-xs font-medium text-muted-foreground">Value:</span>
-            <span className="text-sm font-semibold">${stage?.totalValue?.toLocaleString()}</span>
+            <span className="text-sm font-semibold">₹{stage?.totalValue?.toLocaleString()}</span>
           </div>
           {stage?.timeline && (
             <div className="flex justify-between items-center">

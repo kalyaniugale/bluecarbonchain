@@ -103,7 +103,7 @@ const StageDetailModal = ({ stage, isOpen, onClose, userRole }) => {
                 <div className="text-sm text-muted-foreground">Tokens</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">${stage?.totalValue?.toLocaleString()}</div>
+                <div className="text-2xl font-bold text-foreground"> ₹{stage?.totalValue?.toLocaleString()}</div>
                 <div className="text-sm text-muted-foreground">Total Value</div>
               </div>
               <div className="text-center">

@@ -30,7 +30,7 @@ const InvestorDashboard = () => {
     recentActivity: [
       {
         type: 'purchase',
-        description: 'Purchased FTDC tokens for Mangrove Revival Project',
+        description: 'Purchased FTDC tokens for Sundarbans Mangrove Revival',
         amount: '150 FTDC',
         unit: 'tokens',
         timestamp: '2 hours ago'
@@ -44,7 +44,7 @@ const InvestorDashboard = () => {
       },
       {
         type: 'purchase',
-        description: 'Invested in Seagrass Conservation Initiative',
+        description: 'Invested in Palk Bay Seagrass Conservation',
         amount: '200 FTDC',
         unit: 'tokens',
         timestamp: '3 days ago'
@@ -52,13 +52,13 @@ const InvestorDashboard = () => {
     ]
   });
 
-  // Mock project data
+  // Mock project data (Indian locations & details)
   const mockProjects = [
     {
       id: 1,
-      name: 'Mangrove Revival Project',
+      name: 'Sundarbans Mangrove Revival',
       type: 'Mangrove Restoration',
-      location: 'Costa Rica',
+      location: 'West Bengal (Sundarbans), India',
       carbonPotential: '15,000',
       investmentAmount: 250000,
       status: 'Active',
@@ -74,14 +74,14 @@ const InvestorDashboard = () => {
           paybackPeriod: '3-4 years',
           riskLevel: 'Low'
         },
-        description: `This comprehensive mangrove restoration project focuses on rehabilitating degraded coastal ecosystems in Costa Rica. The initiative combines community engagement with scientific monitoring to ensure long-term sustainability and maximum carbon sequestration potential.`
+        description: `Large-scale rehabilitation of degraded mangrove belts across the Indian Sundarbans. The programme integrates embankment stabilisation, native species replanting, and community-led stewardship to maximise blue-carbon sequestration and cyclone resilience for delta villages.`
       }
     },
     {
       id: 2,
-      name: 'Seagrass Conservation Initiative',
+      name: 'Palk Bay Seagrass Conservation',
       type: 'Seagrass Conservation',
-      location: 'Philippines',
+      location: 'Tamil Nadu (Palk Bay), India',
       carbonPotential: '8,500',
       investmentAmount: 180000,
       status: 'Active',
@@ -97,14 +97,14 @@ const InvestorDashboard = () => {
           paybackPeriod: '4-5 years',
           riskLevel: 'Medium'
         },
-        description: `Protecting and restoring critical seagrass meadows that serve as nurseries for marine life while capturing significant amounts of blue carbon. This project includes local community training and sustainable fishing practices.`
+        description: `Protection and restoration of vital seagrass meadows in Palk Bay, supporting dugongs and fish nurseries while locking away significant blue carbon. Includes fisher co-ops, no-trawl zones, and training in sustainable gear transitions.`
       }
     },
     {
       id: 3,
-      name: 'Coral Reef Restoration',
+      name: 'Gulf of Mannar Coral Restoration',
       type: 'Coral Reef Protection',
-      location: 'Indonesia',
+      location: 'Tamil Nadu (Gulf of Mannar), India',
       carbonPotential: '12,000',
       investmentAmount: 320000,
       status: 'Pending',
@@ -120,14 +120,14 @@ const InvestorDashboard = () => {
           paybackPeriod: '2-3 years',
           riskLevel: 'Medium'
         },
-        description: `Advanced coral restoration using innovative techniques including coral gardening and assisted evolution. This project aims to rebuild resilient reef ecosystems while providing sustainable livelihoods for local communities.`
+        description: `Advanced reef restoration using coral gardening, micro-fragmentation, and artificial substrates near the Gulf of Mannar islands. Designed to rebuild resilient reef structure, enhance fisheries, and create eco-tourism livelihoods with local self-help groups.`
       }
     },
     {
       id: 4,
-      name: 'Coastal Wetlands Protection',
+      name: 'Chilika Lake Wetlands Protection',
       type: 'Coastal Wetlands',
-      location: 'Madagascar',
+      location: 'Odisha (Chilika Lake), India',
       carbonPotential: '20,000',
       investmentAmount: 450000,
       status: 'Active',
@@ -143,14 +143,14 @@ const InvestorDashboard = () => {
           paybackPeriod: '3-4 years',
           riskLevel: 'Low'
         },
-        description: `Large-scale coastal wetland conservation project protecting critical habitat for endemic species while maximizing carbon storage. Includes community-based management and eco-tourism development.`
+        description: `Protection and restoration of Asia’s largest brackish lagoon wetlands, improving hydrology, preventing encroachment, and strengthening bird habitats. Community-based co-management blends carbon outcomes with sustainable tourism around Mangalajodi.`
       }
     },
     {
       id: 5,
-      name: 'Blue Carbon Research Station',
+      name: 'Gulf of Kachchh Blue Carbon Research Station',
       type: 'Marine Protected Areas',
-      location: 'Brazil',
+      location: 'Gujarat (Gulf of Kachchh), India',
       carbonPotential: '6,500',
       investmentAmount: 150000,
       status: 'Completed',
@@ -166,14 +166,14 @@ const InvestorDashboard = () => {
           paybackPeriod: '5-6 years',
           riskLevel: 'Low'
         },
-        description: `Research-focused marine protected area that combines scientific study with carbon credit generation. This project provides valuable data for future blue carbon initiatives while protecting marine biodiversity.`
+        description: `A research-focused marine protected area and living lab for blue-carbon monitoring across mangroves, tidal flats, and seagrass patches. Generates high-quality credits and open datasets to inform future Indian coastal carbon projects.`
       }
     },
     {
       id: 6,
-      name: 'Kelp Forest Restoration',
+      name: 'Andaman & Nicobar Seagrass Restoration',
       type: 'Seagrass Conservation',
-      location: 'Thailand',
+      location: 'Andaman & Nicobar Islands, India',
       carbonPotential: '9,200',
       investmentAmount: 200000,
       status: 'Active',
@@ -189,7 +189,7 @@ const InvestorDashboard = () => {
           paybackPeriod: '4-5 years',
           riskLevel: 'Medium'
         },
-        description: `Innovative kelp forest restoration project using sustainable aquaculture techniques. This initiative combines carbon sequestration with sustainable seaweed farming for local communities.`
+        description: `Restoration and expansion of seagrass meadows supporting island fisheries and coastal protection. Combines community stewardship, careful transplanting, and sustainable seaweed mariculture pilots for diversified incomes.`
       }
     }
   ];
@@ -286,7 +286,7 @@ const InvestorDashboard = () => {
                 Investor Dashboard
               </h1>
               <p className="text-muted-foreground">
-                Discover and invest in carbon credit projects worldwide
+                Discover and invest in carbon credit projects across India
               </p>
             </div>
             
@@ -368,7 +368,7 @@ const InvestorDashboard = () => {
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Investment Amount:</span>
                           <span className="font-medium text-foreground">
-                            ${selectedProject?.investmentAmount?.toLocaleString()}
+                             ₹{selectedProject?.investmentAmount?.toLocaleString()}
                           </span>
                         </div>
                         <div className="flex justify-between">

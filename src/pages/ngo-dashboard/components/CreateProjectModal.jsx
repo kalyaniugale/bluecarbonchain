@@ -270,7 +270,7 @@ const CreateProjectModal = ({ isOpen, onClose, onSubmit }) => {
                   className={`w-full px-3 py-2 border rounded-lg bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 ${
                     errors?.location ? 'border-red-500' : 'border-border'
                   }`}
-                  placeholder="e.g., Coastal Florida, USA"
+                  placeholder="e.g., Kokan, Goa"
                 />
                 {errors?.location && (
                   <p className="text-red-500 text-xs mt-1">{errors?.location}</p>

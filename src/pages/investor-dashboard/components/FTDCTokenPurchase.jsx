@@ -9,15 +9,16 @@ const FTDCTokenPurchase = ({ onPurchaseComplete, availableBalance }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const tokenPrice = 25; // USD per FTDC token
+  const tokenPrice = 25; // INR per FTDC token
   const calculatedTokens = purchaseAmount ? Math.floor(parseFloat(purchaseAmount) / tokenPrice) : 0;
 
-  const availableProjects = [
-    { id: 'mangrove-revival', name: 'Mangrove Revival Project', location: 'Costa Rica' },
-    { id: 'seagrass-conservation', name: 'Seagrass Conservation Initiative', location: 'Philippines' },
-    { id: 'coral-restoration', name: 'Coral Reef Restoration', location: 'Indonesia' },
-    { id: 'coastal-wetlands', name: 'Coastal Wetlands Protection', location: 'Madagascar' }
-  ];
+const availableProjects = [
+  { id: 'sundarbans-mangrove', name: 'Sundarbans Mangrove Revival', location: 'West Bengal (Sundarbans), India' },
+  { id: 'palkbay-seagrass', name: 'Palk Bay Seagrass Conservation', location: 'Tamil Nadu (Palk Bay), India' },
+  { id: 'gulf-mannar-coral', name: 'Gulf of Mannar Coral Restoration', location: 'Tamil Nadu (Gulf of Mannar), India' },
+  { id: 'chilika-wetlands', name: 'Chilika Lake Wetlands Protection', location: 'Odisha (Chilika Lake), India' }
+];
+
 
   const handlePurchaseClick = () => {
     if (!purchaseAmount || !selectedProject || parseFloat(purchaseAmount) <= 0) {
@@ -84,7 +85,7 @@ const FTDCTokenPurchase = ({ onPurchaseComplete, availableBalance }) => {
                 <Icon name="Info" size={16} className="text-primary" />
                 <span className="text-sm font-medium text-foreground">Current Token Price</span>
               </div>
-              <span className="text-lg font-bold text-primary">${tokenPrice} USD</span>
+              <span className="text-lg font-bold text-primary">₹{tokenPrice} INR</span>
             </div>
             <p className="text-xs text-muted-foreground mt-1">
               Per FTDC (Field-to-Digital Carbon) Token
@@ -94,7 +95,7 @@ const FTDCTokenPurchase = ({ onPurchaseComplete, availableBalance }) => {
           {/* Available Balance */}
           <div className="flex items-center justify-between p-3 bg-background rounded-lg border border-border">
             <span className="text-sm text-muted-foreground">Available Balance:</span>
-            <span className="font-medium text-foreground">${availableBalance?.toLocaleString()} USD</span>
+            <span className="font-medium text-foreground">₹{availableBalance?.toLocaleString()} INR</span>
           </div>
 
           {/* Project Selection */}
@@ -119,7 +120,7 @@ const FTDCTokenPurchase = ({ onPurchaseComplete, availableBalance }) => {
           {/* Purchase Amount */}
           <div>
             <Input
-              label="Investment Amount (USD)"
+              label="Investment Amount (INR)"
               type="number"
               placeholder="Enter amount to invest"
               value={purchaseAmount}
@@ -182,7 +183,7 @@ const FTDCTokenPurchase = ({ onPurchaseComplete, availableBalance }) => {
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Investment Amount:</span>
-              <span className="font-medium text-foreground">${parseFloat(purchaseAmount)?.toLocaleString()} USD</span>
+              <span className="font-medium text-foreground">₹{parseFloat(purchaseAmount)?.toLocaleString()} INR</span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">FTDC Tokens:</span>
@@ -190,7 +191,7 @@ const FTDCTokenPurchase = ({ onPurchaseComplete, availableBalance }) => {
             </div>
             <div className="flex justify-between border-t border-border pt-3">
               <span className="text-muted-foreground">Token Price:</span>
-              <span className="font-medium text-foreground">${tokenPrice} USD each</span>
+              <span className="font-medium text-foreground">₹{tokenPrice} INR each</span>
             </div>
           </div>
           <div className="flex space-x-3">

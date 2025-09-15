@@ -14,7 +14,7 @@ const NGODashboard = () => {
   const { user, logout } = useSession();
   const [tokenData, setTokenData] = useState({
     balance: 2847,
-    value: 12.50,
+    value: 1250,
     pending: 156,
     verified: 423,
     lastUpload: "Sep 12, 2025"
@@ -242,13 +242,14 @@ const NGODashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
               <div className="bg-card rounded-lg p-4 border border-border">
                 <div className="text-2xl font-bold text-primary mb-1">
-                  {(tokenData?.balance * tokenData?.value)?.toLocaleString('en-US', { 
+                  {(tokenData?.balance * tokenData?.value * 83)?.toLocaleString('en-IN', { 
                     style: 'currency', 
-                    currency: 'USD',
+                    currency: 'INR',
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0
                   })}
                 </div>
+
                 <div className="text-sm text-muted-foreground">Total Token Value</div>
               </div>
               

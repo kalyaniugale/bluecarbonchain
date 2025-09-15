@@ -15,8 +15,8 @@ const PortfolioSummary = ({ portfolioData }) => {
     },
     {
       title: 'Portfolio Value',
-      value: `$${portfolioData?.portfolioValue?.toLocaleString()}`,
-      unit: 'USD',
+      value: `₹${portfolioData?.portfolioValue?.toLocaleString()}`,
+      unit: 'INR',
       icon: 'TrendingUp',
       color: 'text-success',
       bgColor: 'bg-success/10',
@@ -25,8 +25,8 @@ const PortfolioSummary = ({ portfolioData }) => {
     },
     {
       title: 'Available Balance',
-      value: `$${portfolioData?.availableBalance?.toLocaleString()}`,
-      unit: 'USD',
+      value: `₹${portfolioData?.availableBalance?.toLocaleString()}`,
+      unit: 'INR',
       icon: 'Wallet',
       color: 'text-accent',
       bgColor: 'bg-accent/10',
@@ -35,8 +35,8 @@ const PortfolioSummary = ({ portfolioData }) => {
     },
     {
       title: 'Total Invested',
-      value: `$${portfolioData?.totalInvested?.toLocaleString()}`,
-      unit: 'USD',
+      value: `₹${portfolioData?.totalInvested?.toLocaleString()}`,
+      unit: 'INR',
       icon: 'PieChart',
       color: 'text-secondary',
       bgColor: 'bg-secondary/10',

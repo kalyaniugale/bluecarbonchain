@@ -53,7 +53,7 @@ const PurchaseSuccessModal = ({ isOpen, onClose, purchaseData }) => {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Investment Amount:</span>
-                <span className="font-medium text-foreground">${purchaseData?.amount?.toLocaleString()} USD</span>
+                <span className="font-medium text-foreground">₹{purchaseData?.amount?.toLocaleString()} INR</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">FTDC Tokens Received:</span>

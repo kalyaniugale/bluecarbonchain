@@ -135,8 +135,8 @@ const ProjectListingsTable = ({ projects, onProjectSelect }) => {
                     <div className="text-sm text-muted-foreground">tons CO₂</div>
                   </td>
                   <td className="p-4">
-                    <div className="font-medium text-foreground">${project?.investmentAmount?.toLocaleString()}</div>
-                    <div className="text-sm text-muted-foreground">USD</div>
+                    <div className="font-medium text-foreground"> ₹ {project?.investmentAmount?.toLocaleString()}</div>
+                    <div className="text-sm text-muted-foreground">INR</div>
                   </td>
                   <td className="p-4">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(project?.status)}`}>

@@ -38,7 +38,7 @@ const FTDCTokenCard = ({ tokenData, onDataUpload }) => {
             <Icon name="TrendingUp" size={16} className="text-success" />
             <span className="text-sm font-medium text-foreground">Token Value</span>
           </div>
-          <div className="text-xl font-bold text-foreground">${tokenData?.value?.toFixed(2)}</div>
+          <div className="text-xl font-bold text-foreground"> ₹{tokenData?.value?.toFixed(2)}</div>
           <div className="text-xs text-muted-foreground">Per FTDC Token</div>
         </div>
         
@@ -48,9 +48,9 @@ const FTDCTokenCard = ({ tokenData, onDataUpload }) => {
             <span className="text-sm font-medium text-foreground">Total Value</span>
           </div>
           <div className="text-xl font-bold text-foreground">
-            ${(tokenData?.balance * tokenData?.value)?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+             ₹{(tokenData?.balance * tokenData?.value)?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
-          <div className="text-xs text-muted-foreground">USD Equivalent</div>
+          <div className="text-xs text-muted-foreground">INR Equivalent</div>
         </div>
       </div>
       <div className="space-y-3">
