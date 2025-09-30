@@ -1,12 +1,68 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Inter;
+/* Light Green (default) */
+
+:root {
+  --color-background: #f4fdf7;
+  --color-foreground: #1c2b21;
+  --color-card: #ffffff;
+  --color-card-foreground: #1c2b21;
+
+  --color-primary: #2d6a4f;
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #40916c;
+  --color-secondary-foreground: #ffffff;
+
+  --color-accent: #95d5b2;
+  --color-accent-foreground: #1c2b21;
+
+  --color-muted: #e9f5ed;
+  --color-muted-foreground: #6b8f7a;
+  --color-border: #c6e3d3;
+
+  --color-success: #38b000;
+  --color-success-foreground: #ffffff;
+
+  --color-warning: #ffb703;
+  --color-warning-foreground: #332400;
+
+  --color-error: #d62828;
+  --color-error-foreground: #ffffff;
+
+  --color-input: #ffffff;
+  --color-ring: #74c69d;
 }
 
-* {
-  box-sizing: border-box;
-  line-height: normal;
-  font-family: inherit;
-  margin: unset;
+/* Deep Forest Night */
+.forest-dark {
+  --color-background: #161d1a;
+  --color-card: #1e2723;
+  --color-popover: #1e2723;
+
+  --color-foreground: #d9e6df;
+  --color-card-foreground: #d9e6df;
+
+  --color-primary: #2d6a4f;
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #40916c;
+  --color-secondary-foreground: #ffffff;
+
+  --color-accent: #74c69d;
+  --color-accent-foreground: #0b2f23;
+
+  --color-success: #38b000;
+  --color-success-foreground: #ffffff;
+
+  --color-warning: #ffb703;
+  --color-warning-foreground: #332400;
+
+  --color-error: #d62828;
+  --color-error-foreground: #ffffff;
+
+  --color-border: #2a3a34;
+  --color-muted: #202b27;
+  --color-muted-foreground: #8fa79b;
+
+  --color-input: #1e2723;
+  --color-ring: #40916c;
 }

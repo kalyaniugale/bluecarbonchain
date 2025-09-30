@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import Button from '../../../components/ui/Button';
 
 
 
-const SystemMetricsChart = ({ chartData, chartType = 'bar' }) => {
+const SystemMetricsChart = ({ chartData }) => {
+
+  const [chartType, setChartType] = useState('bar');
+
+
   const barData = [
     { month: 'Jan', projects: 12, tokens: 45, value: 125000 },
     { month: 'Feb', projects: 18, tokens: 62, value: 180000 },
@@ -42,7 +46,7 @@ const SystemMetricsChart = ({ chartData, chartType = 'bar' }) => {
             </div>
           ))}
         </div>
-      );
+      );  
     }
     return null;
   };
@@ -80,16 +84,17 @@ const SystemMetricsChart = ({ chartData, chartType = 'bar' }) => {
           <Button
             variant={chartType === 'bar' ? 'default' : 'outline'}
             size="sm"
-            onClick={() => {}}
+            onClick={() => setChartType('bar')}
             iconName="BarChart3"
             iconPosition="left"
           >
             Bar Chart
           </Button>
+
           <Button
             variant={chartType === 'pie' ? 'default' : 'outline'}
             size="sm"
-            onClick={() => {}}
+            onClick={() => setChartType('pie')}
             iconName="PieChart"
             iconPosition="left"
           >
@@ -137,20 +142,17 @@ const SystemMetricsChart = ({ chartData, chartType = 'bar' }) => {
           </ResponsiveContainer>
         )}
       </div>
-      {chartType === 'pie' && (
-        <div className="flex items-center justify-center space-x-6 mt-4">
-          {pieData?.map((entry, index) => (
-            <div key={index} className="flex items-center space-x-2">
-              <div 
-                className="w-3 h-3 rounded-full" 
-                style={{ backgroundColor: entry?.color }}
-              />
-              <span className="text-sm text-muted-foreground">{entry?.name}</span>
-              <span className="text-sm font-medium text-foreground">{entry?.value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Legend on right side */}
+      <div className="flex flex-col justify-center space-y-3 ml-6">
+        {pieData.map((entry, index) => (
+          <div key={index} className="flex items-center space-x-2">
+            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: entry.color }} />
+            <span className="text-sm text-foreground font-medium">{entry.name}</span>
+            <span className="text-sm text-muted-foreground">({entry.value})</span>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };

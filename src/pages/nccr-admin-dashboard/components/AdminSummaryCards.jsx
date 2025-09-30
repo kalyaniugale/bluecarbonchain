@@ -39,9 +39,9 @@ const AdminSummaryCards = ({ stats }) => {
     {
       id: 'total_value',
       title: 'Total System Value',
-      value: new Intl.NumberFormat('en-US', {
+      value: new Intl.NumberFormat('en-IN', {
         style: 'currency',
-        currency: 'USD',
+        currency: 'IND',
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       })?.format(stats?.totalSystemValue),
@@ -50,7 +50,7 @@ const AdminSummaryCards = ({ stats }) => {
       icon: 'DollarSign',
       iconColor: 'text-primary',
       iconBg: 'bg-primary/10',
-      description: 'USD equivalent'
+      description: 'INR equivalent'
     }
   ];
 

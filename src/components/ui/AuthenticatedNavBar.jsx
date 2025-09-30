@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Icon from '../AppIcon';
 import Button from './Button';
+import ThemeToggle from "./ThemeToggle";
+
 
 const AuthenticatedNavBar = ({ user, onLogout }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -95,8 +97,11 @@ const AuthenticatedNavBar = ({ user, onLogout }) => {
             ))}
           </div>
 
+
+
           {/* Desktop User Menu */}
           <div className="hidden md:flex items-center space-x-4">
+            <ThemeToggle />
             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <Icon name="User" size={16} />
               <span className="capitalize">{user?.role || 'User'}</span>
@@ -112,6 +117,7 @@ const AuthenticatedNavBar = ({ user, onLogout }) => {
               Logout
             </Button>
           </div>
+          
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
@@ -142,6 +148,8 @@ const AuthenticatedNavBar = ({ user, onLogout }) => {
                 <span className="font-medium">{item?.label}</span>
               </button>
             ))}
+
+            
             
             <div className="pt-4 border-t border-border">
               <div className="flex items-center space-x-2 px-3 py-2 text-sm text-muted-foreground">
@@ -156,8 +164,11 @@ const AuthenticatedNavBar = ({ user, onLogout }) => {
                 <span className="font-medium">Logout</span>
               </button>
             </div>
+
+            
           </div>
         </div>
+        
       )}
     </nav>
   );
