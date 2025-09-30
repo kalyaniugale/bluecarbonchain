@@ -11,6 +11,14 @@ import PurchaseSuccessModal from './components/PurchaseSuccessModal';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 
+// helpers (place under imports)
+const inr = (n=0) =>
+  new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(n);
+
+const dIN = (isoOrMdY) =>
+  new Date(isoOrMdY).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+
+
 const InvestorDashboard = () => {
   const { user, logout, isAuthenticated } = useSession();
   const navigate = useNavigate();
@@ -280,28 +288,21 @@ const InvestorDashboard = () => {
           <RoleBasedBreadcrumb user={user} />
           
           {/* Header */}
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8 gap-3">
             <div>
-              <h1 className="text-3xl font-bold text-foreground mb-2">
-                Investor Dashboard
-              </h1>
-              <p className="text-muted-foreground">
-                Discover and invest in carbon credit projects across India
+              <h1 className="text-3xl font-bold text-foreground">Investor Dashboard</h1>
+              <p className="text-muted-foreground mt-1">
+                Discover and invest in blue-carbon projects across India
               </p>
             </div>
-            
-            <div className="mt-4 lg:mt-0 flex items-center space-x-3">
-              <Button
-                variant="outline"
-                onClick={handleViewTokenFlow}
-                iconName="GitBranch"
-                iconPosition="left"
-              >
+
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 text-primary px-3 py-1 text-sm">
+                <Icon name="IndianRupee" size={16} /> Wallet: {inr(portfolioData?.availableBalance)}
+              </span>
+              <Button variant="outline" iconName="GitBranch" iconPosition="left" onClick={handleViewTokenFlow}>
                 Token Flow
               </Button>
-              <div className="text-sm text-muted-foreground">
-                Welcome back, <span className="font-medium text-foreground">{user?.email}</span>
-              </div>
             </div>
           </div>
 
@@ -315,10 +316,21 @@ const InvestorDashboard = () => {
                 filteredCount={filteredProjects?.length}
               />
               
-              <ProjectListingsTable
-                projects={filteredProjects}
-                onProjectSelect={handleProjectSelect}
-              />
+            <ProjectListingsTable
+              projects={filteredProjects}
+              onProjectSelect={handleProjectSelect}
+              renderActions={(project) => (
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" iconName="Eye" onClick={() => handleProjectSelect(project)}>
+                    View
+                  </Button>
+                  <Button variant="default" size="sm" iconName="TrendingUp">
+                    Invest
+                  </Button>
+                </div>
+              )}
+            />
+
             </div>
 
             {/* Right Column - Portfolio & Purchase */}
@@ -363,55 +375,48 @@ const InvestorDashboard = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div className="bg-background rounded-lg border border-border p-4">
-                      <h3 className="font-medium text-foreground mb-3">Investment Details</h3>
+                      <h3 className="font-medium text-foreground mb-3">Investment</h3>
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Investment Amount:</span>
-                          <span className="font-medium text-foreground">
-                             ₹{selectedProject?.investmentAmount?.toLocaleString()}
-                          </span>
+                          <span className="text-muted-foreground">Amount</span>
+                          <span className="font-semibold">{inr(selectedProject?.investmentAmount)}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Carbon Potential:</span>
-                          <span className="font-medium text-foreground">
-                            {selectedProject?.carbonPotential} tons CO₂
-                          </span>
+                          <span className="text-muted-foreground">Carbon Potential</span>
+                          <span className="font-medium">{selectedProject?.carbonPotential} tons CO₂</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Status:</span>
+                          <span className="text-muted-foreground">Status</span>
                           <span className={`font-medium ${
                             selectedProject?.status === 'Active' ? 'text-success' :
                             selectedProject?.status === 'Pending' ? 'text-warning' : 'text-primary'
-                          }`}>
-                            {selectedProject?.status}
-                          </span>
+                          }`}>{selectedProject?.status}</span>
                         </div>
                       </div>
                     </div>
 
                     <div className="bg-background rounded-lg border border-border p-4">
-                      <h3 className="font-medium text-foreground mb-3">Expected Returns</h3>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">ROI:</span>
-                          <span className="font-medium text-success">
-                            {selectedProject?.details?.expectedReturns?.roi}
-                          </span>
+                      <h3 className="font-medium text-foreground mb-3">Verification</h3>
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div className="flex items-center gap-2">
+                          <Icon name="ShieldCheck" size={16} className="text-success" />
+                          <span className="text-muted-foreground">Status</span>
+                          <span className="ml-auto font-medium">{selectedProject?.details?.verificationStatus}</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Payback Period:</span>
-                          <span className="font-medium text-foreground">
-                            {selectedProject?.details?.expectedReturns?.paybackPeriod}
-                          </span>
+                        <div className="flex items-center gap-2">
+                          <Icon name="FileText" size={16} className="text-primary" />
+                          <span className="text-muted-foreground">Body</span>
+                          <span className="ml-auto font-medium">{selectedProject?.details?.certifyingBody}</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Risk Level:</span>
-                          <span className={`font-medium ${
-                            selectedProject?.details?.expectedReturns?.riskLevel === 'Low' ? 'text-success' :
-                            selectedProject?.details?.expectedReturns?.riskLevel === 'Medium' ? 'text-warning' : 'text-error'
-                          }`}>
-                            {selectedProject?.details?.expectedReturns?.riskLevel}
-                          </span>
+                        <div className="flex items-center gap-2">
+                          <Icon name="Calendar" size={16} className="text-accent" />
+                          <span className="text-muted-foreground">Last Audit</span>
+                          <span className="ml-auto font-medium">{dIN(selectedProject?.details?.lastAudit)}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Icon name="Triangle" size={16} className="text-warning" />
+                          <span className="text-muted-foreground">Risk</span>
+                          <span className="ml-auto font-medium">{selectedProject?.details?.expectedReturns?.riskLevel}</span>
                         </div>
                       </div>
                     </div>

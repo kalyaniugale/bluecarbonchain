@@ -1,0 +1,87 @@
+/* Fancy sun/moon switch (inspired by CodePen), themed via your CSS vars */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  height: 36px;
+  width: 68px;
+}
+
+.theme-toggle input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.theme-toggle .track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  width: 68px;
+  border-radius: 999px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 2px 6px rgba(0,0,0,.12) inset, 0 1px 2px rgba(0,0,0,.06);
+  transition: background .25s ease, border-color .25s ease;
+}
+
+.theme-toggle .icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-muted-foreground);
+  transition: color .25s ease, opacity .25s ease;
+  pointer-events: none;
+}
+
+.theme-toggle .icon.sun { left: 10px; }
+.theme-toggle .icon.moon { right: 10px; }
+
+.theme-toggle .knob {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  height: 28px;
+  width: 28px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--color-muted) 0%, var(--color-card) 100%);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 10px rgba(0,0,0,.18);
+  transition: transform .28s cubic-bezier(.4,0,.2,1), background .25s ease;
+}
+
+/* Checked (dark) state */
+.theme-toggle input:checked + .track {
+  background: var(--color-muted);
+  border-color: var(--color-border);
+}
+
+.theme-toggle input:checked + .track .knob {
+  transform: translateX(32px);
+  background: linear-gradient(180deg, #0e1512 0%, #1e2723 100%);
+}
+
+.theme-toggle input:not(:checked) + .track .icon.sun {
+  color: var(--color-accent);
+  opacity: 1;
+}
+.theme-toggle input:not(:checked) + .track .icon.moon {
+  opacity: .6;
+}
+
+.theme-toggle input:checked + .track .icon.sun {
+  opacity: .6;
+}
+.theme-toggle input:checked + .track .icon.moon {
+  color: var(--color-accent);
+  opacity: 1;
+}
+
+/* Focus ring for a11y */
+.theme-toggle input:focus-visible + .track {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
