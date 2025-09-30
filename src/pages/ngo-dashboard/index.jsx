@@ -9,175 +9,184 @@ import QuickActionsCard from './components/QuickActionsCard';
 import ExistingProjectsList from './components/ExistingProjectsList';
 import CreateProjectModal from './components/CreateProjectModal';
 import ProjectDetailsModal from './components/ProjectDetailsModal';
+import UploadFieldDataModal from './components/UploadFieldDataModal';
+import FundingTransactionsCard from './components/FundingTransactionsCard';
+
+const typeLabelMap = {
+  photo: 'Site Photo',
+  geoPhoto: 'Geo-tagged Photo',
+  drone: 'Drone Image',
+  sensor: 'Sensor Log',
+  survey: 'Field Survey',
+};
 
 const NGODashboard = () => {
   const { user, logout } = useSession();
+
+  // FDCT balances
   const [tokenData, setTokenData] = useState({
     balance: 2847,
-    value: 1250,
+    value: 1200,
     pending: 156,
     verified: 423,
-    lastUpload: "Sep 12, 2025"
+    lastUpload: 'Sep 12, 2025'
   });
 
+  // Example projects
   const [projects, setProjects] = useState([
     {
       id: '1',
-      name: 'Mangrove Restoration Project Alpha',
-      description: 'Large-scale mangrove restoration initiative focused on coastal protection and carbon sequestration in tropical waters.',
+      name: 'Sundarbans Mangrove Revival',
+      description: 'Restoration of degraded mangroves with village SHGs.',
       type: 'Mangrove Restoration',
-      location: 'Coastal Florida, USA',
-      size: 25.5,
-      expectedCredits: 1250,
-      status: 'active',
-      methodology: 'Verified Carbon Standard (VCS)',
-      startDate: '2025-01-15',
-      endDate: '2027-01-15',
-      createdAt: '2025-01-10T00:00:00Z',
-      lastUpdated: '2025-01-12T00:00:00Z',
-      additionalNotes: 'This project focuses on restoring degraded mangrove ecosystems while engaging local communities.'
+      location: 'South 24 Parganas, West Bengal',
+      size: 32.5,
+      expectedCredits: 1400,
+      status: 'active'
     },
     {
       id: '2',
-      name: 'Seagrass Conservation Initiative',
-      description: 'Comprehensive seagrass bed protection and restoration program with community engagement components.',
+      name: 'Gulf of Mannar Seagrass Restoration',
+      description: 'Replanting seagrass meadows with fishing coop members.',
       type: 'Seagrass Conservation',
-      location: 'Caribbean Coast',
-      size: 12.3,
-      expectedCredits: 800,
-      status: 'pending',
-      methodology: 'Gold Standard',
-      startDate: '2025-03-01',
-      endDate: '2026-12-31',
-      createdAt: '2025-01-05T00:00:00Z',
-      lastUpdated: '2025-01-08T00:00:00Z',
-      additionalNotes: 'Pending verification from local environmental authorities.'
-    },
-    {
-      id: '3',
-      name: 'Blue Carbon Kelp Forest',
-      description: 'Marine kelp forest restoration and protection project targeting underwater carbon storage.',
-      type: 'Kelp Forest Conservation',
-      location: 'Pacific Northwest',
-      size: 8.7,
-      expectedCredits: 650,
-      status: 'completed',
-      methodology: 'Climate Action Reserve',
-      startDate: '2024-06-01',
-      endDate: '2025-05-31',
-      createdAt: '2024-05-15T00:00:00Z',
-      lastUpdated: '2025-01-01T00:00:00Z',
-      additionalNotes: 'Successfully completed with 120% of expected carbon credit generation.'
+      location: 'Tamil Nadu Coast',
+      size: 14.2,
+      expectedCredits: 900,
+      status: 'pending'
     }
   ]);
 
+  // stats
   const [projectStats, setProjectStats] = useState({
     active: 0,
     pending: 0,
     completed: 0,
-    carbonCredits: 1567,
-    quarterlyGrowth: 23
+    carbonCredits: 1567
   });
 
-  const [recentActivities] = useState([
+  // activity + transactions
+  const [recentActivities, setRecentActivities] = useState([]);
+  const [transactions, setTransactions] = useState([
     {
-      type: 'upload',
-      title: 'Field data uploaded successfully',
-      description: 'Mangrove restoration site #3 - 45 data points recorded',
-      timestamp: new Date(Date.now() - 15 * 60 * 1000),
-      status: 'completed'
+      id: 'T-001',
+      date: '2025-09-25',
+      projectId: '1',
+      projectName: 'Sundarbans Mangrove Revival',
+      investor: 'Prakriti Ventures LLP (Mumbai)',
+      tokens: 500,
+      pricePerTokenINR: 950,
+      totalINR: 500 * 950,
+      stage: 'Released',
+      status: 'Completed'
     },
     {
-      type: 'verification',
-      title: 'Project verification completed',
-      description: 'Coastal wetland project approved by NCCR admin',
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
-      status: 'completed'
-    },
-    {
-      type: 'token',
-      title: 'FTDC tokens received',
-      description: '156 tokens credited for verified field data',
-      timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000),
-      status: 'completed'
-    },
-    {
-      type: 'project',
-      title: 'New project initiated',
-      description: 'Blue carbon seagrass restoration project started',
-      timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000),
-      status: 'pending'
-    },
-    {
-      type: 'verification',
-      title: 'Data under review',
-      description: 'Salt marsh monitoring data submitted for verification',
-      timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000),
-      status: 'pending'
+      id: 'T-002',
+      date: '2025-09-20',
+      projectId: '2',
+      projectName: 'Gulf of Mannar Seagrass Restoration',
+      investor: 'GreenEdge Capital (Bangalore)',
+      tokens: 300,
+      pricePerTokenINR: 1020,
+      totalINR: 300 * 1020,
+      stage: 'Escrow',
+      status: 'In Progress'
     }
   ]);
 
-  // Modal states
+  // modal states
   const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] = useState(false);
   const [isProjectDetailsModalOpen, setIsProjectDetailsModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
 
-  // Update project stats when projects change
+  // recalc stats
   useEffect(() => {
-    const active = projects?.filter(p => p?.status === 'active')?.length || 0;
-    const pending = projects?.filter(p => p?.status === 'pending')?.length || 0;
-    const completed = projects?.filter(p => p?.status === 'completed')?.length || 0;
-    
-    setProjectStats(prev => ({
-      ...prev,
-      active,
-      pending,
-      completed
-    }));
+    const active = projects.filter(p => p.status === 'active').length;
+    const pending = projects.filter(p => p.status === 'pending').length;
+    const completed = projects.filter(p => p.status === 'completed').length;
+    setProjectStats({ active, pending, completed, carbonCredits: 1567 });
   }, [projects]);
 
-  const handleDataUpload = () => {
-    // Simulate successful data upload
-    setTokenData(prev => ({
-      ...prev,
-      pending: prev?.pending + 25,
-      lastUpload: new Date()?.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric', 
-        year: 'numeric' 
-      })
-    }));
-  };
-
-  const handleCreateProject = () => {
-    setIsCreateProjectModalOpen(true);
-  };
-
+  // handlers
   const handleProjectSubmit = (projectData) => {
     setProjects(prev => [projectData, ...prev]);
     setIsCreateProjectModalOpen(false);
-    
-    // Add success activity
-    const newActivity = {
-      type: 'project',
-      title: 'New project created',
-      description: `${projectData?.name} project has been successfully created`,
-      timestamp: new Date(),
-      status: 'completed'
-    };
-    
-    // This would typically update the activities list
-    console.log('New project created:', projectData);
   };
 
-  const handleViewProject = (project) => {
+  const handleOpenUpload = (project) => {
     setSelectedProject(project);
-    setIsProjectDetailsModalOpen(true);
+    setIsUploadModalOpen(true);
   };
 
-  useEffect(() => {
-    document.title = 'NGO Dashboard - BlueCarbonChain';
-  }, []);
+  const handleSubmitUpload = (payload) => {
+    console.log("UPLOAD PAYLOAD >>>", payload);
+
+    if (!payload || !payload.projectId) {
+      alert("Upload failed: no project ID.");
+      return;
+    }
+
+    const { projectId, type, recordsCount, meta } = payload;
+    const recs = Number.isFinite(Number(recordsCount)) ? Number(recordsCount) : 0;
+    const proj = projects.find(p => p.id === projectId);
+
+    if (!proj) {
+      alert("Upload failed: project not found.");
+      return;
+    }
+
+    // update FDCT
+    const addPending = Math.max(5, Math.floor(recs / 2));
+    setTokenData(prev => ({
+      ...prev,
+      pending: (prev?.pending || 0) + addPending,
+      lastUpload: new Date().toLocaleDateString('en-GB')
+    }));
+
+    // activity (with geo if available)
+    const locText = meta?.lat && meta?.lng ? ` · (${meta.lat}, ${meta.lng})` : '';
+    setRecentActivities(prev => [
+      {
+        type: 'upload',
+        title: `${typeLabelMap[type] || 'Data'} uploaded`,
+        description: `${proj.name} · ${recs} record(s)${locText}`,
+        timestamp: new Date(),
+        status: 'completed'
+      },
+      ...prev
+    ]);
+
+    // fake transaction with Indian investor
+    const demoInvestors = [
+      "Prakriti Ventures LLP (Mumbai)",
+      "GreenEdge Capital (Bangalore)",
+      "Sagar Sustainables Pvt Ltd (Chennai)",
+      "Himalaya Carbon Trust (Delhi)"
+    ];
+    const investor = demoInvestors[Math.floor(Math.random() * demoInvestors.length)];
+    const tokens = Math.max(50, Math.floor(recs / 3));
+    const pricePerTokenINR = 975;
+
+    setTransactions(prev => [
+      {
+        id: `T-${Date.now()}`,
+        date: new Date().toISOString().slice(0, 10),
+        projectId,
+        projectName: proj.name,
+        investor,
+        tokens,
+        pricePerTokenINR,
+        totalINR: tokens * pricePerTokenINR,
+        stage: 'Escrow',
+        status: 'In Progress'
+      },
+      ...prev
+    ]);
+
+    // close modal
+    setIsUploadModalOpen(false);
+    setSelectedProject(null);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -185,87 +194,28 @@ const NGODashboard = () => {
       <main className="pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <RoleBasedBreadcrumb user={user} />
-          
-          {/* Header Section */}
-          <div className="mb-8">
-            <div className="flex items-center space-x-3 mb-2">
-              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
-                </svg>
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-foreground">NGO Dashboard</h1>
-                <p className="text-muted-foreground">
-                  Welcome back! Manage your carbon offset projects and track FTDC tokens.
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-              <div className="flex items-center space-x-1">
-                <div className="w-2 h-2 bg-success rounded-full"></div>
-                <span>System Status: Online</span>
-              </div>
-              <span>•</span>
-              <span>Last sync: {new Date()?.toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-              })}</span>
-            </div>
-          </div>
 
-          {/* Dashboard Grid */}
+          {/* Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column - Main Cards */}
             <div className="lg:col-span-2 space-y-6">
-              <FTDCTokenCard 
-                tokenData={tokenData} 
-                onDataUpload={handleDataUpload}
-              />
+              <FTDCTokenCard tokenData={tokenData} />
               <ProjectOverviewCard projectStats={projectStats} />
-              <ExistingProjectsList 
-                projects={projects} 
-                onViewProject={handleViewProject}
+              <ExistingProjectsList
+                projects={projects}
+                onViewProject={setSelectedProject}
+                onUploadData={handleOpenUpload}
               />
             </div>
-
-            {/* Right Column - Secondary Cards */}
             <div className="space-y-6">
-              <QuickActionsCard onCreateProject={handleCreateProject} />
+              <QuickActionsCard
+                onCreateProject={() => setIsCreateProjectModalOpen(true)}
+                onUploadData={() => {
+                  const first = projects.find(p => p.status !== 'completed') || projects[0];
+                  if (first) handleOpenUpload(first);
+                }}
+              />
+              <FundingTransactionsCard transactions={transactions} />
               <RecentActivityCard activities={recentActivities} />
-            </div>
-          </div>
-
-          {/* Footer Info */}
-          <div className="mt-12 pt-8 border-t border-border">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-              <div className="bg-card rounded-lg p-4 border border-border">
-                <div className="text-2xl font-bold text-primary mb-1">
-                  {(tokenData?.balance * tokenData?.value * 83)?.toLocaleString('en-IN', { 
-                    style: 'currency', 
-                    currency: 'INR',
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                  })}
-                </div>
-
-                <div className="text-sm text-muted-foreground">Total Token Value</div>
-              </div>
-              
-              <div className="bg-card rounded-lg p-4 border border-border">
-                <div className="text-2xl font-bold text-success mb-1">
-                  {projectStats?.carbonCredits?.toLocaleString()}
-                </div>
-                <div className="text-sm text-muted-foreground">Carbon Credits Earned</div>
-              </div>
-              
-              <div className="bg-card rounded-lg p-4 border border-border">
-                <div className="text-2xl font-bold text-accent mb-1">
-                  {projects?.length}
-                </div>
-                <div className="text-sm text-muted-foreground">Total Projects</div>
-              </div>
             </div>
           </div>
         </div>
@@ -277,14 +227,16 @@ const NGODashboard = () => {
         onClose={() => setIsCreateProjectModalOpen(false)}
         onSubmit={handleProjectSubmit}
       />
-
       <ProjectDetailsModal
         project={selectedProject}
         isOpen={isProjectDetailsModalOpen}
-        onClose={() => {
-          setIsProjectDetailsModalOpen(false);
-          setSelectedProject(null);
-        }}
+        onClose={() => setIsProjectDetailsModalOpen(false)}
+      />
+      <UploadFieldDataModal
+        isOpen={isUploadModalOpen}
+        project={selectedProject}
+        onClose={() => { setIsUploadModalOpen(false); setSelectedProject(null); }}
+        onSubmit={handleSubmitUpload}
       />
     </div>
   );
